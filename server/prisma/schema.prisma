@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Song {
+  id               String   @id
+  trackName        String
+  artistName       String
+  popularity       Int
+  albumName        String
+  albumReleaseDate DateTime
+  danceability     Int
+  energy           Int
+  key              Int
+  loudness         Int
+  mode             Int
+  speechiness      Int
+  acousticness     Int
+  instrumentalness Int
+  liveness         Int
+  valence          Int
+  tempo            Int
+  durationMillis   Int
+
+  playlists SongPlaylist[]
+}
+
+model Playlist {
+  id   String @id
+  name String
+
+  genres    PlaylistGenre[]
+  playlists SongPlaylist[]
+}
+
+model SongPlaylist {
+  songId     String
+  playlistId String
+
+  song     Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+
+  @@id([songId, playlistId])
+}
+
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  playlists PlaylistGenre[]
+}
+
+model PlaylistGenre {
+  playlistId String
+  genreId    Int
+
+  genre    Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+
+  @@id([playlistId, genreId])
+}

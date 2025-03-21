@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "base full-stack example project for running technical interviews",
   "packageManager": "pnpm@10.6.2",
+  "scripts": {
+    "postinstall": "pnpm --filter server exec prisma generate"
+  },
   "devDependencies": {
     "prettier": "^3.4.2"
   }
