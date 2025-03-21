@@ -1,0 +1,10 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "common types shared between server + client",
+  "private": true,
+  "devDependencies": {
+    "@prisma/client": "6.5.0",
+    "typescript": "5.7.3"
+  }
+}

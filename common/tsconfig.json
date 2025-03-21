@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "CommonJS",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Allow JSX for testing utils */
+    "jsx": "react-jsx",
+
+    /* support usage with old frontends */
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
+    "composite": true,
+    "outDir": "dist",
+
+    "esModuleInterop": true
+  },
+  "include": ["types"]
+}

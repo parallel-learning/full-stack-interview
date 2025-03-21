@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Song {
-  id               String   @id
+  id               String @id
   trackName        String
   artistName       String
   popularity       Int
   albumName        String
-  albumReleaseDate DateTime
+  albumReleaseDate String
   danceability     Int
   energy           Int
   key              Int
