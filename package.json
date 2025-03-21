@@ -2,5 +2,8 @@
   "name": "full-stack-interview",
   "version": "1.0.0",
   "description": "base full-stack example project for running technical interviews",
-  "packageManager": "pnpm@10.6.2"
+  "packageManager": "pnpm@10.6.2",
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
 }
