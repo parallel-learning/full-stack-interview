@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
-import { SongPage, SongQuery } from "common/types/song.types";
+import { Song, SongPage, SongQuery } from "common/types/song.types";
 
 class LibraryAPI {
   private instance: AxiosInstance;
@@ -14,6 +14,9 @@ class LibraryAPI {
 
   public searchPlaylists = (query: PlaylistQuery = {}): Promise<PlaylistPage> =>
     this.instance.get("playlist", { params: query }).then(r => r.data);
+
+  public getRecommendedSongs = (playlistId: string): Promise<Song[]> =>
+    this.instance.get(`playlist/${playlistId}/recommend-songs`).then(r => r.data);
 }
 
 export const libraryApi = new LibraryAPI();

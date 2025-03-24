@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { ExtendedPlaylist, PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
-import { libraryApi } from "../api/library.api";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { libraryApi } from "../api/library.api";
+import PlaylistDetails from "../components/PlaylistDetails";
 import { DEFAULT_STYLES } from "../util/data.util";
-import { useNavigate } from "react-router";
+import { Song } from "common/types/song.types";
 
 const DATA_GRID_COLUMNS: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1 },
@@ -29,11 +29,19 @@ const PlaylistListScreen = () => {
     fetchPlaylistPage();
   }, []);
 
+  const addSongToSelectedPlaylist = (song: Song) => {
+    if (!selectedPlaylist) return;
+    setSelectedPlaylist({
+      ...selectedPlaylist,
+      songs: [...selectedPlaylist.songs, song],
+    });
+  };
+
   return (
     <Stack gap={2} p={2} height="100%" width="100%">
       <Typography variant="h3">Playlists</Typography>
 
-      <Stack direction="row" sx={{ height: 0, width: "100%", flex: "1 1 0%" }}>
+      <Stack direction="row" gap={2} sx={{ height: 0, width: "100%", flex: "1 1 0%" }}>
         <DataGrid
           columns={DATA_GRID_COLUMNS}
           rows={playlistPage?.playlists.map(toPlaylistRow)}
@@ -53,22 +61,23 @@ const PlaylistListScreen = () => {
         />
 
         {selectedPlaylist && (
-          <Stack gap={2} width="50%" height="100%" px={2}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography variant="h4">{selectedPlaylist.name}</Typography>
-              <IconButton onClick={() => setSelectedPlaylist(undefined)}>
-                <CloseIcon />
-              </IconButton>
-            </Stack>
-
-            <Typography variant="subtitle1">Songs</Typography>
-
-            <Stack gap={1} sx={{ height: 0, width: "100%", flex: "1 1 0%", overflowY: "auto" }}>
-              {selectedPlaylist.songs.map(song => (
-                <Typography variant="body1">{song.trackName}</Typography>
-              ))}
-            </Stack>
-          </Stack>
+          <Box
+            sx={{
+              width: "50%",
+              height: "100%",
+              p: 2,
+              overflowY: "auto",
+              border: 1,
+              borderColor: "grey.300",
+              borderRadius: 1,
+            }}
+          >
+            <PlaylistDetails
+              playlist={selectedPlaylist}
+              onClose={() => setSelectedPlaylist(undefined)}
+              addSong={addSongToSelectedPlaylist}
+            />
+          </Box>
         )}
       </Stack>
     </Stack>

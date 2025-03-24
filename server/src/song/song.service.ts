@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Song } from "@prisma/client";
 import { SongPage, SongQuery } from "common/types/song.types";
 
 @Injectable()
@@ -13,5 +13,9 @@ export class SongService {
       this.prisma.song.count(),
     ]);
     return { songs, totalCount };
+  };
+
+  public getRecommendedSongs = (playlistId: string): Promise<Song[]> => {
+    return this.prisma.song.findMany({ where: { playlists: { none: { playlistId } } }, take: 25 });
   };
 }
