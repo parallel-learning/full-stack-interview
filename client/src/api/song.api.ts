@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { Song } from "common/types/song.types";
+import { SongPage, SongQuery } from "common/types/song.types";
 
 class SongAPI {
   private instance: AxiosInstance;
@@ -8,7 +8,8 @@ class SongAPI {
     this.instance = axios.create({ baseURL: "http://localhost:8000" });
   }
 
-  public search = (): Promise<Song[]> => this.instance.get("song").then(r => r.data);
+  public search = (query: SongQuery = {}): Promise<SongPage> =>
+    this.instance.get("song", { params: query }).then(r => r.data);
 }
 
 export const songApi = new SongAPI();
