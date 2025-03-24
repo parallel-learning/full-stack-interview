@@ -6,8 +6,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SongListScreen />} />
-        <Route path="/playlist" element={<PlaylistListScreen />} />
+        <Route path="/" element={<PlaylistListScreen />} />
+        <Route path="/song" element={<SongListScreen />} />
       </Routes>
     </BrowserRouter>
   );
