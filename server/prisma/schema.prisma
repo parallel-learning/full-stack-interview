@@ -34,8 +34,8 @@ model Playlist {
   id   String @id
   name String
 
-  genres    PlaylistGenre[]
-  playlists SongPlaylist[]
+  genres PlaylistGenre[]
+  songs  SongPlaylist[]
 }
 
 model SongPlaylist {

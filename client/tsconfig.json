@@ -22,9 +22,9 @@
 
     /* Absolute Imports */
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // },
 
     /* Miscellaneous */
     "esModuleInterop": true

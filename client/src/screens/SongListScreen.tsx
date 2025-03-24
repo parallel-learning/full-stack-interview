@@ -2,7 +2,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { SongPage, SongQuery } from "common/types/song.types";
-import { songApi } from "../api/song.api";
+import { libraryApi } from "../api/library.api";
+import { DEFAULT_STYLES } from "../util/data.util";
 
 const DATA_GRID_COLUMNS: GridColDef[] = [
   { field: "trackName", headerName: "Track", flex: 1 },
@@ -13,7 +14,7 @@ const DATA_GRID_COLUMNS: GridColDef[] = [
 const SongListScreen = () => {
   const [songPage, setSongPage] = useState<SongPage>();
 
-  const fetchSongPage = (query?: SongQuery) => songApi.search(query).then(setSongPage);
+  const fetchSongPage = (query?: SongQuery) => libraryApi.searchSongs(query).then(setSongPage);
 
   useEffect(() => {
     fetchSongPage();
@@ -21,7 +22,7 @@ const SongListScreen = () => {
 
   return (
     <Stack gap={2} p={2} height="100%" width="100%">
-      <Typography variant="h3">Song List</Typography>
+      <Typography variant="h3">Songs</Typography>
       <Box sx={{ height: 0, width: "100%", flex: "1 1 0%" }}>
         <DataGrid
           columns={DATA_GRID_COLUMNS}
@@ -34,6 +35,7 @@ const SongListScreen = () => {
           onPaginationModelChange={({ pageSize, page: pageIndex }) =>
             fetchSongPage({ pageSize, offset: pageIndex * pageSize })
           }
+          sx={DEFAULT_STYLES}
         />
       </Box>
     </Stack>

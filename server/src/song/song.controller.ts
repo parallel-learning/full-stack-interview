@@ -1,16 +1,11 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { SongService } from "src/song/song.service";
 import { SongPage, SongQuery } from "common/types/song.types";
+import { parseQueryInt } from "src/uti/query.util";
 
 type RawSongQuery = {
   pageSize?: string;
   offset?: string;
-};
-
-const parseQueryInt = (param: string | undefined): number | undefined => {
-  if (!param) return;
-  const parsed = parseInt(param);
-  return parsed || undefined;
 };
 
 @Controller("song")
