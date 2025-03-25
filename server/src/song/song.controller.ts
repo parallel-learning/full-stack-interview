@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { SongService } from "src/song/song.service";
 import { SongPage, SongQuery } from "common/types/song.types";
-import { parseQueryInt } from "src/uti/query.util";
+import { parseQueryInt } from "src/utils/query.util";
 
 type RawSongQuery = {
   pageSize?: string;

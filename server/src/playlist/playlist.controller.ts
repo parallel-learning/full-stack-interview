@@ -3,7 +3,7 @@ import { Song } from "@prisma/client";
 import { ExtendedPlaylist, PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
 import { PlaylistService } from "src/playlist/playlist.service";
 import { SongService } from "src/song/song.service";
-import { parseQueryInt } from "src/uti/query.util";
+import { parseQueryInt } from "src/utils/query.util";
 
 type RawPlaylistQuery = {
   pageSize?: string;
