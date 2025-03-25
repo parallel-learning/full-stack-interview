@@ -41,7 +41,9 @@ const PlaylistDetails = ({ playlist, onClose }: { playlist: ExtendedPlaylist; on
       {isCurrentExpanded && (
         <Stack gap={1}>
           {playlist.songs.map(song => (
-            <Typography variant="body1">{song.trackName}</Typography>
+            <Typography variant="body1" key={song.id}>
+              {song.trackName}
+            </Typography>
           ))}
         </Stack>
       )}
@@ -61,6 +63,7 @@ const PlaylistDetails = ({ playlist, onClose }: { playlist: ExtendedPlaylist; on
               justifyContent="space-between"
               alignItems="center"
               sx={{ p: 1, borderBottom: 1, borderColor: "grey.200" }}
+              key={song.id}
             >
               <Typography variant="body1">{song.trackName}</Typography>
               <IconButton onClick={() => addSong(song.id)}>

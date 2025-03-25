@@ -42,7 +42,7 @@ const PlaylistListScreen = () => {
           }}
           rowSelection={false}
           paginationMode="server"
-          rowCount={playlistPage?.totalCount}
+          rowCount={playlistPage?.totalCount || 0}
           pageSizeOptions={[25, 50, 100]}
           initialState={{ pagination: { paginationModel: { page: 0, pageSize: 25 } } }}
           onPaginationModelChange={({ pageSize, page: pageIndex }) =>
