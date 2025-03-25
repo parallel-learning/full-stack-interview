@@ -10,7 +10,7 @@ export class PlaylistService {
     const { pageSize = 25, offset = 0 } = query;
 
     const [rawPlaylists, totalCount] = await this.prisma.$transaction([
-      this.prisma.playlist.findMany({ take: pageSize, skip: offset, include: { songs: { include: { song: true } } } }),
+      this.prisma.playlist.findMany({ take: pageSize, skip: offset, include: playlistInclude }),
       this.prisma.playlist.count(),
     ]);
 
@@ -20,15 +20,19 @@ export class PlaylistService {
   public addSong = async (playlistId: string, songId: string): Promise<ExtendedPlaylist> => {
     const existing = await this.prisma.songPlaylist.findMany({ where: { playlistId, songId } });
 
-    if (existing.length > 0) {
+    if (existing.length === 0) {
       await this.prisma.songPlaylist.create({ data: { playlistId, songId } });
     }
 
-    return this.prisma.playlist.findUnique({ where: { id: playlistId } }).then(toExtendedPlaylist);
+    return this.prisma.playlist
+      .findUnique({ where: { id: playlistId }, include: playlistInclude })
+      .then(toExtendedPlaylist);
   };
 }
 
 type RawPlaylist = Playlist & { songs: (SongPlaylist & { song: Song })[] };
+
+const playlistInclude = { songs: { include: { song: true } } };
 
 const toExtendedPlaylist = (raw: RawPlaylist) => ({
   id: raw.id,
