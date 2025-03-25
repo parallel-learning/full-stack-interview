@@ -8,15 +8,7 @@ import { useEffect, useState } from "react";
 import { Song } from "common/types/song.types";
 import { libraryApi } from "../api/library.api";
 
-const PlaylistDetails = ({
-  playlist,
-  onClose,
-  addSong,
-}: {
-  playlist: ExtendedPlaylist;
-  onClose: () => void;
-  addSong: (s: Song) => void;
-}) => {
+const PlaylistDetails = ({ playlist, onClose }: { playlist: ExtendedPlaylist; onClose: () => void }) => {
   const [isCurrentExpanded, setIsCurrentExpanded] = useState(false);
   const [isRecommendedExpanded, setisRecommendedExpanded] = useState(false);
 
@@ -25,6 +17,10 @@ const PlaylistDetails = ({
   useEffect(() => {
     libraryApi.getRecommendedSongs(playlist.id).then(setRecommendedSongs);
   }, [playlist.id]);
+
+  const addSong = (songId: string) => {
+    libraryApi.addPlaylistSong(playlist.id, songId);
+  };
 
   return (
     <Stack gap={2}>
@@ -67,7 +63,7 @@ const PlaylistDetails = ({
               sx={{ p: 1, borderBottom: 1, borderColor: "grey.200" }}
             >
               <Typography variant="body1">{song.trackName}</Typography>
-              <IconButton onClick={() => addSong(song)}>
+              <IconButton onClick={() => addSong(song.id)}>
                 <PlaylistAddIcon />
               </IconButton>
             </Stack>

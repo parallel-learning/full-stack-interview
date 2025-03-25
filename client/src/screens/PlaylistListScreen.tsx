@@ -5,7 +5,6 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { libraryApi } from "../api/library.api";
 import PlaylistDetails from "../components/PlaylistDetails";
 import { DEFAULT_STYLES } from "../util/data.util";
-import { Song } from "common/types/song.types";
 
 const DATA_GRID_COLUMNS: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1 },
@@ -28,14 +27,6 @@ const PlaylistListScreen = () => {
   useEffect(() => {
     fetchPlaylistPage();
   }, []);
-
-  const addSongToSelectedPlaylist = (song: Song) => {
-    if (!selectedPlaylist) return;
-    setSelectedPlaylist({
-      ...selectedPlaylist,
-      songs: [...selectedPlaylist.songs, song],
-    });
-  };
 
   return (
     <Stack gap={2} p={2} height="100%" width="100%">
@@ -72,11 +63,7 @@ const PlaylistListScreen = () => {
               borderRadius: 1,
             }}
           >
-            <PlaylistDetails
-              playlist={selectedPlaylist}
-              onClose={() => setSelectedPlaylist(undefined)}
-              addSong={addSongToSelectedPlaylist}
-            />
+            <PlaylistDetails playlist={selectedPlaylist} onClose={() => setSelectedPlaylist(undefined)} />
           </Box>
         )}
       </Stack>

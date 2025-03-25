@@ -1,6 +1,6 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { Controller, Get, Param, Put, Query } from "@nestjs/common";
 import { Song } from "@prisma/client";
-import { PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
+import { ExtendedPlaylist, PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
 import { PlaylistService } from "src/playlist/playlist.service";
 import { SongService } from "src/song/song.service";
 import { parseQueryInt } from "src/uti/query.util";
@@ -29,5 +29,10 @@ export class PlaylistController {
   @Get(":playlistId/recommend-songs")
   getRecommendedSongs(@Param("playlistId") playlistId: string): Promise<Song[]> {
     return this.songService.getRecommendedSongs(playlistId);
+  }
+
+  @Put(":playlistId/song/:songId")
+  putPlaylistSong(@Param("playlistId") playlistId: string, @Param("songId") songId: string): Promise<ExtendedPlaylist> {
+    return this.playlistService.addSong(playlistId, songId);
   }
 }

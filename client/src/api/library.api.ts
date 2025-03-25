@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
+import { ExtendedPlaylist, PlaylistPage, PlaylistQuery } from "common/types/playlist.types";
 import { Song, SongPage, SongQuery } from "common/types/song.types";
 
 class LibraryAPI {
@@ -17,6 +17,9 @@ class LibraryAPI {
 
   public getRecommendedSongs = (playlistId: string): Promise<Song[]> =>
     this.instance.get(`playlist/${playlistId}/recommend-songs`).then(r => r.data);
+
+  public addPlaylistSong = (playlistId: string, songId: string): Promise<ExtendedPlaylist> =>
+    this.instance.put(`playlist/${playlistId}/song/${songId}`).then(r => r.data);
 }
 
 export const libraryApi = new LibraryAPI();
